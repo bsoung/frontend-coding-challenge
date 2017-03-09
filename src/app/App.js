@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { APIManager } from '../utils';
+import { Board } from '../components';
 import './App.css';
 import 'whatwg-fetch';
 
@@ -20,9 +21,7 @@ class App extends Component {
       APIManager.post('https://api.eventable.com/v1/token-auth/');
     }
 
-    console.log('found token!')
     // this.fetchEvents('https://api.eventable.com/v1/events/')
-    // TODO fetchEvents
   }
 
   fetchEvents(url) {
@@ -43,7 +42,13 @@ class App extends Component {
         const events = res.results;
 
         for (let i = 0, len = events.length; i < len; i++) {
-          this.addEvent(events[i]);
+
+          // keep naming consistent
+          let title = events[i].title;
+          let startTime = events[i].start_time;
+          let endTime = events[i].end_time;
+
+          this.addEvent(title, startTime, endTime);
         }
         
         return res;
@@ -66,10 +71,27 @@ class App extends Component {
     })
   }
 
+  updateEvents = (events) => {
+    if (!events) {
+      return;
+    }
+
+    this.setState({
+      filteredEvents: events
+    })
+  }
+
   render() {
+    console.log(this.state)
     return (
       <div className="App">
-        <h1>Title</h1>
+        <h1>{this.state.title}</h1>
+        <Board
+          events={this.state.events}
+          filteredEvents={this.state.filteredEvents}
+          addEvent={this.addEvent}
+          updateEvents={this.updateEvents}
+        />
       </div>
     );
   }
