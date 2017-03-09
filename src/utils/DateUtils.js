@@ -3,7 +3,7 @@ import moment from 'moment';
 export default {
 	prettifyDate: (date) => {
 		let formatDate = new Date(date);
-		let prettyDate = moment(formatDate).format("dddd, MMMM Do YYYY, h:mm:ss a");
+		let prettyDate = moment(formatDate).format("dddd, MMMM Do YYYY, h:mm a");
 
 		return prettyDate
 	},

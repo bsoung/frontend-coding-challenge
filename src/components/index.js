@@ -7,5 +7,8 @@ import { Search } from './search';
 
 export {
 	Board,
-	Event
+	Event,
+	Form,
+	List,
+	Search
 }

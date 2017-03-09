@@ -1,4 +1,5 @@
 import React from 'react';
+import { List } from '../';
 
 export default (props) => {
 	return (
@@ -6,6 +7,8 @@ export default (props) => {
 			<div>
 				Board Component
 			</div>
+
+		<List events={props.filteredEvents} />
 		</div>
 	)
 }
