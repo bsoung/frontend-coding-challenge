@@ -1,18 +1,35 @@
 import React, { Component } from 'react';
-import logo from '../logo.svg';
+import { APIManager } from '../utils';
 import './App.css';
+import 'whatwg-fetch';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      title: 'Awesome Eventable Events',
+      events: [],
+      filteredEvents: []
+    }
+  }
+
+  componentDidMount() {
+    if (!localStorage.getItem('token') && localStorage.getItem('token').length < 1) {
+      console.log("token not found!");
+      APIManager.post('https://api.eventable.com/v1/token-auth/');
+    }
+
+    console.log('found token!')
+    // TODO fetchEvents
+  }
+
+
+
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <h1>Title</h1>
       </div>
     );
   }
