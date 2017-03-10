@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { DateUtils } from '../../utils';
+import './Form.css';
 
 class Form extends Component {
 
@@ -18,9 +19,9 @@ class Form extends Component {
 
 		} = this;
 
-		const { onAddEvent } = this.props;
+		const { addEvent } = this.props;
 
-		if (!onAddEvent) {
+		if (!addEvent) {
 			return;
 		}
 
@@ -42,16 +43,17 @@ class Form extends Component {
 			return;
 		}
 
-		let prettyStartDate = DateUtils.prettifyDate(startDate);
-		let prettyEndDate = DateUtils.prettifyDate(endDate);
+		let start_time = DateUtils.prettifyDate(startDate);
+		let end_time = DateUtils.prettifyDate(endDate);
+		let url = null;
 
-		if (prettyStartDate === error || prettyEndDate === error) {
+		if (start_time === error || end_time === error) {
 			alert('Weird format detected! Please use the suggested date formats :)');
 
 			return;
 		}
 
-		onAddEvent(title, prettyStartDate, prettyEndDate);
+		addEvent({title, start_time, end_time, url});
 
 		this.resetFields();
 	}
@@ -78,17 +80,16 @@ class Form extends Component {
 
 	render() {
 		return (
-			<form onSubmit={this.onFormSubmit}>
+			<form className="form-container" onSubmit={this.onFormSubmit}>
+				<label>Title</label>
 				<input type="text" ref={e => this.titleInput = e} placeholder="Enter event title!" />
 
-				<div>
-					<div>Start Date</div>
+				<div className="form-group">
+					<label>Start</label>
 					<input type="date" ref={e => this.startDateInput = e} placeholder="mm/dd/yyyy" />
 					<input type="time" ref={e => this.startTimeInput = e} placeholder="hour:min:AM or PM" />
-				</div>
 
-				<div>
-					<div>End Date</div>
+					<label>End</label>
 					<input type="date" ref={e => this.endDateInput = e} placeholder="mm/dd/yyyy" />
 					<input type="time" ref={e => this.endTimeInput = e} placeholder="hour:min:AM or PM" />
 				</div>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { DateUtils } from '../../utils';
+import './Search.css';
 
 class Search extends Component {
 
@@ -40,12 +41,13 @@ class Search extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className="search-container">
+				<label>Search</label>
 				<input type="text" ref={e => this.searchEventInput = e} onChange={this.searchEvent} placeholder="Search event" />
 				
 				<form>
 				  <select ref={e => this.searchTime = e} onChange={this.searchEvent} >
-				  	<option value="0">Select Start Time</option>
+				  	<option value="0">Search by time</option>
 				    <option value="1">1 : 00</option>
 				    <option value="2">2 : 00</option>
 				    <option value="3">3 : 00</option>

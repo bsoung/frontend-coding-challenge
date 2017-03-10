@@ -1,0 +1,9 @@
+form {
+	margin-right: 10px;
+}
+
+.search-container {
+	display: flex;
+	margin-top: 20px;
+	margin-left: 20px;
+}

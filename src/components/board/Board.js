@@ -1,17 +1,15 @@
 import React from 'react';
 import { Form, List, Search } from '../';
+import './Board.css';
 
 export default (props) => {
 	return (
-		<div>
-			<div>
-				Create an Event
-			</div>
+		<div className="board-container">
+		
+				<Form events={props.events} addEvent={props.addEvent} />
+				<Search events={props.events} updateEvents={props.updateEvents} />
 
-			<Form events={props.events} addEvent={props.addEvent} />
-			<Search events={props.events} updateEvents={props.updateEvents} />
 			<List events={props.filteredEvents} />
-
 		</div>
 	)
 }
