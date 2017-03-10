@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { DateUtils } from '../../utils';
 
 class Form extends Component {
+
 	onFormSubmit = (e) => {
 		e.preventDefault();
 
@@ -17,16 +18,15 @@ class Form extends Component {
 
 		} = this;
 
-		const { addEvent } = this.props;
+		const { onAddEvent } = this.props;
 
-		if (!addEvent) {
+		if (!onAddEvent) {
 			return;
 		}
 
 		let title = titleInput.value;
 		let startDate = `${startDateInput.value} ${startTimeInput.value}`;
 		let endDate = `${endDateInput.value} ${endTimeInput.value}`;
-
 
 		if (!title || !startDate || !endDate) {
 			alert('Uh oh. Please make sure you have a title, start date, and end date entered!');
@@ -45,16 +45,13 @@ class Form extends Component {
 		let prettyStartDate = DateUtils.prettifyDate(startDate);
 		let prettyEndDate = DateUtils.prettifyDate(endDate);
 
-		console.log(prettyStartDate)
-
 		if (prettyStartDate === error || prettyEndDate === error) {
 			alert('Weird format detected! Please use the suggested date formats :)');
 
 			return;
 		}
 
-
-		addEvent(title, prettyStartDate, prettyEndDate);
+		onAddEvent(title, prettyStartDate, prettyEndDate);
 
 		this.resetFields();
 	}
@@ -79,7 +76,6 @@ class Form extends Component {
 		return;
 	}
 
-	
 	render() {
 		return (
 			<form onSubmit={this.onFormSubmit}>

@@ -15,9 +15,8 @@ class Search extends Component {
 			const eventDate = (DateUtils.createDate(event.start_time)).format("h");
 			const ampmType = (DateUtils.createDate(event.start_time)).format("a");
 
-			console.log(ampmType, "eventDate")
-
 			if (event.title.indexOf(searchEventInput.value) === -1) {
+				console.log("here")
 				return;
 			}
 
@@ -25,13 +24,14 @@ class Search extends Component {
 				return;
 			}
 
+			console.log(event)
 			return event;
 		});
 
 		// sort alphabetically
-		filtered.sort((a, b) => {
-	    let textA = a.title.toUpperCase();
-	    let textB = b.title.toUpperCase();
+		filtered.sort(function(a, b) {
+	    var textA = a.title.toUpperCase();
+	    var textB = b.title.toUpperCase();
 	    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
 		});
 
@@ -65,6 +65,7 @@ class Search extends Component {
 				  <select ref={e => this.searchAMPM = e} onChange={this.searchEvent} >
 				    <option value="am">AM</option>
 				    <option value="pm">PM</option>
+				 
 				  </select>
 				</form>
 

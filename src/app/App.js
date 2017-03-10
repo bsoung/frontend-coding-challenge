@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { APIManager } from '../utils';
 import { Board } from '../components';
+import _ from 'lodash';
 import './App.css';
 import 'whatwg-fetch';
 
@@ -17,56 +17,67 @@ class App extends Component {
 
   componentDidMount() {
     if (!localStorage.getItem('token') && localStorage.getItem('token').length < 1) {
-      APIManager.post('https://api.eventable.com/v1/token-auth/');
+      this.eventableAuthenticate('https://api.eventable.com/v1/token-auth/');
     }
 
-    // this.fetchEvents('https://api.eventable.com/v1/events/')
+    this.fetchEvents('https://api.eventable.com/v1/events/');
   }
 
-  fetchEvents(url) {
-    const options = {
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "token " + localStorage.getItem('token')
-      }
+  eventableAuthenticate = (url) => {
+
+    const data = {
+      username: 'candidate.5545@eventable.com',
+      password: 'R8VMaFVK'
     }
 
-    fetch(url, options)
-      .then(res => {
-        return res.json()
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "same-origin"
+    })
+    .then(res => {
+
+      return res.json();
+    })
+    .then(function(response) {
+      localStorage.setItem('token', response.token);
+
+      return response;
+    }, function(error) {
+      error.message //=> String
+    })
+  }
+
+  fetchEvents = (url) => {
+    fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "token " + localStorage.getItem('token') 
+        },
       })
       .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+      })
+      .then(res => {
+        console.log(res, 'response')
 
         const events = res.results;
 
         for (let i = 0, len = events.length; i < len; i++) {
-
-          // keep naming consistent
-          let title = events[i].title;
-          let startTime = events[i].start_time;
-          let endTime = events[i].end_time;
-
-          this.addEvent(title, startTime, endTime);
+          this.addEvent(events[i])
         }
-        
+
         return res;
       })
       .catch(err => {
-        console.error(err)
-      })
-  }
-
-  addEvent = (title, startTime, endTime) => {
-    let events = [...this.state.events];
-
-    let newEvent = {title, startTime, endTime};
-
-    events.push(newEvent);
-
-    this.setState({
-      events,
-      filteredEvents: events
-    })
+        alert("A problem occured while fetching data!");
+        console.error(err);
+      });
   }
 
   updateEvents = (events) => {
@@ -79,16 +90,30 @@ class App extends Component {
     })
   }
 
+  addEvent = ({title, start_time, end_time}) => {
+
+    let events = [...this.state.events];
+
+    let newEvent = {title, start_time, end_time};
+
+    events.push(newEvent);
+
+    this.setState({
+      events,
+      filteredEvents: events
+    });
+  }
+
   render() {
-    console.log(this.state)
+
     return (
       <div className="App">
         <h1>{this.state.title}</h1>
         <Board
           events={this.state.events}
           filteredEvents={this.state.filteredEvents}
-          addEvent={this.addEvent}
-          updateEvents={this.updateEvents}
+          addEvent={this.addEvent.bind(this)}
+          updateEvents={this.updateEvents.bind(this)}
         />
       </div>
     );

@@ -8,12 +8,10 @@ export default (props) => {
 				Create an Event
 			</div>
 
-			
 			<Form events={props.events} addEvent={props.addEvent} />
-
 			<Search events={props.events} updateEvents={props.updateEvents} />
 			<List events={props.filteredEvents} />
-			
+
 		</div>
 	)
 }
