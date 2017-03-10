@@ -5,7 +5,14 @@ export default {
 		let formatDate = new Date(date);
 		let prettyDate = moment(formatDate).format("dddd, MMMM Do YYYY, h:mm a");
 
-		return prettyDate
+		if (prettyDate === "Invalid date") {
+		
+			return date;
+
+		} else {
+
+			return prettyDate;
+		}
 	},
 
 	checkDates: (start, end) => {

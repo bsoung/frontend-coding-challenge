@@ -1,14 +1,19 @@
 import React from 'react';
-import { List } from '../';
+import { Form, List, Search } from '../';
 
 export default (props) => {
 	return (
 		<div>
 			<div>
-				Board Component
+				Create an Event
 			</div>
 
-		<List events={props.filteredEvents} />
+			
+			<Form events={props.events} addEvent={props.addEvent} />
+
+			<Search events={props.events} updateEvents={props.updateEvents} />
+			<List events={props.filteredEvents} />
+			
 		</div>
 	)
 }

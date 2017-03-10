@@ -17,9 +17,9 @@ class Form extends Component {
 
 		} = this;
 
-		const { onAddEvent } = this.props;
+		const { addEvent } = this.props;
 
-		if (!onAddEvent) {
+		if (!addEvent) {
 			return;
 		}
 
@@ -27,7 +27,8 @@ class Form extends Component {
 		let startDate = `${startDateInput.value} ${startTimeInput.value}`;
 		let endDate = `${endDateInput.value} ${endTimeInput.value}`;
 
-				if (!title || !startDate || !endDate) {
+
+		if (!title || !startDate || !endDate) {
 			alert('Uh oh. Please make sure you have a title, start date, and end date entered!');
 
 			return;
@@ -44,13 +45,16 @@ class Form extends Component {
 		let prettyStartDate = DateUtils.prettifyDate(startDate);
 		let prettyEndDate = DateUtils.prettifyDate(endDate);
 
+		console.log(prettyStartDate)
+
 		if (prettyStartDate === error || prettyEndDate === error) {
 			alert('Weird format detected! Please use the suggested date formats :)');
 
 			return;
 		}
 
-		onAddEvent(title, prettyStartDate, prettyEndDate);
+
+		addEvent(title, prettyStartDate, prettyEndDate);
 
 		this.resetFields();
 	}

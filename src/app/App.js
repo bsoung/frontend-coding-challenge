@@ -17,7 +17,6 @@ class App extends Component {
 
   componentDidMount() {
     if (!localStorage.getItem('token') && localStorage.getItem('token').length < 1) {
-      console.log("token not found!");
       APIManager.post('https://api.eventable.com/v1/token-auth/');
     }
 
@@ -37,7 +36,6 @@ class App extends Component {
         return res.json()
       })
       .then(res => {
-        console.log(res.results)
 
         const events = res.results;
 
